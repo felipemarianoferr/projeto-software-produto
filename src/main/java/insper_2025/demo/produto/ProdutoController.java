@@ -20,7 +20,7 @@ public class ProdutoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Produto> getProdutoById(@RequestParam String id) {
+    public ResponseEntity<Produto> getProdutoById(@PathVariable String id) {
         return ResponseEntity.ok().body(produtoService.findProdutoById(id));
     }
 
