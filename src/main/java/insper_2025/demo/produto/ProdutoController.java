@@ -18,23 +18,15 @@ public class ProdutoController {
         return produtoService.listaProdutos();
     }
 
-    @GetMapping("/estoque/{id}")
-    public String atualizaEstoque(@PathVariable String id, @PathVariable Integer quantidade) {
-        produtoService.atualizaEstoque(id, quantidade);
+    @PutMapping("/estoque/{id}/{quantidade}")
+    public String atualizaEstoque(@PathVariable String id, @PathVariable Integer quantidade, @RequestParam boolean x) {
+        produtoService.atualizaEstoque(id, quantidade, x);
         return "Estoque Atualizado";
     }
 
     @PostMapping
     public Produto saveProduto(@RequestBody Produto produto) {
         return produtoService.cadastraProduto(produto);
-    }
-
-    @PutMapping("/produtos/{id}/estoque")
-    public ResponseEntity<Void> atualizaEstoquePut(
-            @PathVariable String id,
-            @RequestParam Integer quantidade) {
-        produtoService.atualizaEstoque(id, quantidade);
-        return ResponseEntity.noContent().build();
     }
 
 

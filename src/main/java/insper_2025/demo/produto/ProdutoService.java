@@ -29,10 +29,16 @@ public class ProdutoService {
         return produtoDB;
     }
 
-    public void atualizaEstoque(String id, Integer quantidade){
+    public void atualizaEstoque(String id, Integer quantidade, boolean x){
         Produto produtoDB = findProdutoById(id);
-        int novoEstoque = produtoDB.getEstoque() - quantidade;
-        produtoDB.setEstoque(novoEstoque);
+        if (x){
+            int novoEstoque = produtoDB.getEstoque() + quantidade;
+            produtoDB.setEstoque(novoEstoque);
+        }else {
+            int novoEstoque = produtoDB.getEstoque() - quantidade;
+            produtoDB.setEstoque(novoEstoque);
+        }
+
     }
 
     public List<Produto> listaProdutos(){
