@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/produto")
@@ -19,11 +20,11 @@ public class ProdutoController {
     }
 
     @PutMapping("/estoque/{id}/{quantidade}")
-    public String atualizaEstoque(@PathVariable String id, @PathVariable Integer quantidade, @RequestBody boolean x) {
+    public String atualizaEstoque(@PathVariable String id, @PathVariable Integer quantidade, @RequestBody Map<String, Boolean> requestBody) {
+        boolean x = requestBody.get("x");
         produtoService.atualizaEstoque(id, quantidade, x);
         return "Estoque Atualizado";
     }
-
     @PostMapping
     public Produto saveProduto(@RequestBody Produto produto) {
         return produtoService.cadastraProduto(produto);
