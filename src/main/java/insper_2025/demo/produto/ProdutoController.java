@@ -19,7 +19,7 @@ public class ProdutoController {
     }
 
     @PutMapping("/estoque/{id}/{quantidade}")
-    public String atualizaEstoque(@PathVariable String id, @PathVariable Integer quantidade, @RequestParam boolean x) {
+    public String atualizaEstoque(@PathVariable String id, @PathVariable Integer quantidade, @RequestBody boolean x) {
         produtoService.atualizaEstoque(id, quantidade, x);
         return "Estoque Atualizado";
     }
