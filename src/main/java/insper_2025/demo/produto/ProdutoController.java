@@ -19,9 +19,8 @@ public class ProdutoController {
         return produtoService.listaProdutos();
     }
 
-    @PutMapping("/estoque/{id}/{quantidade}")
-    public String atualizaEstoque(@PathVariable String id, @PathVariable Integer quantidade, @RequestBody Map<String, Boolean> requestBody) {
-        boolean x = requestBody.get("x");
+    @PutMapping("/estoque/{id}/{quantidade}/{x}")
+    public String atualizaEstoque(@PathVariable String id, @PathVariable Integer quantidade, @PathVariable String x) {
         produtoService.atualizaEstoque(id, quantidade, x);
         return "Estoque Atualizado";
     }
