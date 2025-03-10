@@ -19,6 +19,11 @@ public class ProdutoController {
         return produtoService.listaProdutos();
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Produto> getProdutoById(@RequestParam String id) {
+        return ResponseEntity.ok().body(produtoService.findProdutoById(id));
+    }
+
     @PutMapping("/estoque/{id}/{quantidade}/{x}")
     public String atualizaEstoque(@PathVariable String id, @PathVariable Integer quantidade, @PathVariable String x) {
         produtoService.atualizaEstoque(id, quantidade, x);
