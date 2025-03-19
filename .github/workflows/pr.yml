@@ -33,8 +33,8 @@ jobs:
           paths: |
             ${{ github.workspace }}/**/target/test-results/jacoco/jacoco.xml
           token: ${{ secrets.GITHUB_TOKEN }}
-          min-coverage-overall: 50
-          min-coverage-changed-files: 50
+          min-coverage-overall: 80
+          min-coverage-changed-files: 80
 
       - name: Gerar Badge de Cobertura
         uses: cicirello/jacoco-badge-generator@v2
