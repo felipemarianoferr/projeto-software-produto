@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import insper_2025.demo.produto.Produto;
 import insper_2025.demo.produto.ProdutoController;
 import insper_2025.demo.produto.ProdutoService;
-import lombok.Data;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -21,7 +20,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.Arrays;
 import java.util.List;
-@Data
+
 @ExtendWith(MockitoExtension.class)
 public class ProdutoControllerTests {
 
@@ -43,9 +42,19 @@ public class ProdutoControllerTests {
 
     @Test
     void test_GetProdutos() throws Exception {
-        List<Produto> produtos = Arrays.asList(
-                new Produto(), new Produto()
-        );
+        Produto produto1 = new Produto();
+        produto1.setId("1");
+        produto1.setNome("Produto A");
+        produto1.setPreco(29.99);
+        produto1.setEstoque(10);
+
+        Produto produto2 = new Produto();
+        produto2.setId("2");
+        produto2.setNome("Produto B");
+        produto2.setPreco(49.99);
+        produto2.setEstoque(20);
+
+        List<Produto> produtos = Arrays.asList(produto1, produto2);
 
         Mockito.when(produtoService.listaProdutos()).thenReturn(produtos);
 
@@ -61,12 +70,14 @@ public class ProdutoControllerTests {
         Produto produto = new Produto();
         produto.setId("123");
         produto.setNome("Produto A");
+        produto.setPreco(29.99);
+        produto.setEstoque(10);
 
-        Mockito.when(produtoService.findProdutoById("1")).thenReturn(produto);
+        Mockito.when(produtoService.findProdutoById("123")).thenReturn(produto);
 
         ObjectMapper objectMapper = new ObjectMapper();
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/produto/1"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/produto/123"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json(objectMapper.writeValueAsString(produto)));
     }
@@ -74,11 +85,12 @@ public class ProdutoControllerTests {
     @Test
     void test_PostProduto() throws Exception {
         Produto produto = new Produto();
-        produto.setNome("Produto A");
-        produto.setPreco(29.99);
-        produto.setEstoque(10);
+        produto.setId("123");
+        produto.setNome("Produto Teste");
+        produto.setPreco(39.99);
+        produto.setEstoque(15);
 
-        Mockito.when(produtoService.cadastraProduto(produto)).thenReturn(produto);
+        Mockito.when(produtoService.cadastraProduto(Mockito.any())).thenReturn(produto);
 
         ObjectMapper objectMapper = new ObjectMapper();
 
@@ -93,9 +105,9 @@ public class ProdutoControllerTests {
 
     @Test
     void test_PutAtualizaEstoque() throws Exception {
-        Mockito.doNothing().when(produtoService).atualizaEstoque("1", 20, "true");
+        Mockito.doNothing().when(produtoService).atualizaEstoque("123", 20, "true");
 
-        mockMvc.perform(MockMvcRequestBuilders.put("/api/produto/estoque/1/20/true"))
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/produto/estoque/123/20/true"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().string("Estoque Atualizado"));
     }
